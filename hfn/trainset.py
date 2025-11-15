@@ -1,0 +1,24 @@
+import os
+
+import numpy as np
+
+path = 'C:\\Users\\xiubo\\Desktop\\BRATS2020_Training_none_npy\\vol'
+canny_path = 'C:\\Users\\xiubo\\Desktop\\BRATS2020_Training_canny_npy\\seg_crop'
+for case in os.listdir(path):
+
+    vol_case_path = os.path.join(path, case)
+    vol_data = np.load(vol_case_path)
+
+    case_number = case[17:20]
+
+    canny_case_name = 'BraTS20_Training_'+case_number+'_canny.npy'
+
+    canny_case_path = os.path.join(canny_path, canny_case_name)
+    canny_data = np.load(canny_case_path)
+
+    canny_expanded_array = np.expand_dims(canny_data, axis=3)
+
+    result = np.concatenate((vol_data, canny_expanded_array), axis=3)
+
+    save_path = 'D:/Data_seg/BRATS2020_Training_none_npy/vol_addcanny'
+    np.save(os.path.join(save_path, case), result)

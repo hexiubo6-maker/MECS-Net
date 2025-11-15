@@ -1,0 +1,31 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 读取.npy文件
+file_path = 'D:/Data_seg/BRATS2019_Training_none_npy/vol/HGG_BraTS19_2013_2_1_vol.npy'  # 替换为你的文件路径
+data = np.load(file_path)
+
+# 分离出四张图片
+images = data.reshape((4, data.shape[0], data.shape[1], data.shape[2]))
+
+# 展示每张图片的特定切片
+for i, img in enumerate(images):
+    print(f"展示第{i + 1}张图片：")
+
+    # 展示(129, 159)的切片
+    plt.figure(figsize=(10, 5))
+    plt.subplot(1, 3, 1)
+    plt.title(f'第{i + 1}张图片的(129, 159)切片')
+    plt.imshow(img[:, :, 64], cmap='gray')  # 假设64是中间的切片索引
+
+    # 展示(159, 128)的切片
+    plt.subplot(1, 3, 2)
+    plt.title(f'第{i + 1}张图片的(159, 128)切片')
+    plt.imshow(img[64, :, :], cmap='gray')  # 假设64是中间的切片索引
+
+    # 展示(129, 128)的切片
+    plt.subplot(1, 3, 3)
+    plt.title(f'第{i + 1}张图片的(129, 128)切片')
+    plt.imshow(img[:, 64, :], cmap='gray')  # 假设64是中间的切片索引
+
+    plt.show()
